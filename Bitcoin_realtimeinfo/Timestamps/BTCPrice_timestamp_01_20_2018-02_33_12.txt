@@ -1,0 +1,1387 @@
+# [Bitstamp](/)
+
+  1. [Home](/)
+  2. [Account](/account/balance/)
+  3. [Buy / Sell](/market/order/instant/)
+  4. [Deposit](/account/deposit/)
+  5. [Withdrawal](/account/withdraw/)
+  6. [Tradeview](/market/tradeview/)
+
+# [Bitstamp](/)
+
+![](/s/icons/mobile_menu.png)
+
+  1. Back
+  2. [Register](/account/register/)
+  3. [Log In](/account/login/)
+  4. [Home](/)
+  5. [Account](/account/balance/)
+  6. [Buy / Sell](/market/order/instant/)
+  7. [Deposit](/account/deposit/)
+  8. [Withdrawal](/account/withdraw/)
+  9. [Tradeview](/market/tradeview/)
+
+### BTC / USD
+
+### USD **12533.13**
+
+  * Bitcoin BTC
+  * BTC / USDUSD 12533.13
+  * BTC / EUREUR 10303.09
+
+  * Euro
+  * EUR / USDUSD 1.21859
+
+  * Ripple XRP
+  * XRP / USDUSD 1.56001
+  * XRP / EUREUR 1.27703
+  * XRP / BTCBTC 0.00012404
+
+  * Litecoin
+  * LTC / USDUSD 203.86
+  * LTC / EUREUR 167.47
+  * LTC / BTCBTC 0.01627012
+
+  * Ethereum
+  * ETH / USDUSD 1112.89
+  * ETH / EUREUR 912.30
+  * ETH / BTCBTC 0.08853137
+
+  * Bitcoin Cash BCH
+  * BCH / USDUSD 1894.89
+  * BCH / EUREUR 1551.00
+  * BCH / BTCBTC 0.15005007
+
+[Register](/account/register/)
+
+[Log In](/account/login/)
+
+  * [Overview ](/)
+  * [Order Book ](/market/order_book/)
+  * [API ](/api/)
+    * [ HTTP API](/api/)
+    * [ Websocket API](/websocket/)
+    * [FIX ](/fix/)
+
+# API
+
+## What Is API?
+
+Bitstamp application programming interface (API) allows our clients to access
+and control their accounts, using custom written software.
+
+With the inclusion of the new BTC/EUR currency pair, we've added new endpoints
+for some API calls (info about specific calls below). **The old endpoints are
+still available and have not changed.** We strongly suggest however, that you
+refer to the v2 API for future references. Please note that API v2 endpoints
+rounding is different, than the one used on the old endpoints.
+
+## Request limits
+
+Do not make more than 600 requests per 10 minutes or we will ban your IP
+address. For real time data please refer to the [websocket API](/websocket/).
+
+## Public Data Functions
+
+#### Ticker
+
+Passing any GET parameters, will result in your request being rejected.
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/ticker/  
+  | Returns data for the BTC/USD currency pair.  
+GET |  https://www.bitstamp.net/api/v2/ticker/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Response (JSON)**  
+---  
+**last** |  Last BTC price.  
+**high** |  Last 24 hours price high.  
+**low** |  Last 24 hours price low.  
+**vwap** |  Last 24 hours [volume weighted average
+price](http://en.wikipedia.org/wiki/Volume-weighted_average_price).  
+**volume** |  Last 24 hours volume.  
+**bid** |  Highest buy order.  
+**ask** |  Lowest sell order.  
+**timestamp** |  Unix timestamp date and time.  
+**open** |  First price of the day.  
+  
+#### Hourly ticker
+
+Passing any GET parameters, will result in your request being rejected.
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/ticker_hour/  
+  | Returns data for the BTC/USD currency pair.  
+GET |  https://www.bitstamp.net/api/v2/ticker_hour/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Response (JSON)**  
+---  
+Returns a JSON dictionary like the ticker call, with the calculated values
+being from within an hour.  
+  
+#### Order book
+
+Passing any GET parameters, will result in your request being rejected.
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/order_book/  
+  | Returns data for the BTC/USD currency pair.  
+GET |  https://www.bitstamp.net/api/v2/order_book/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+Returns a JSON dictionary like the ticker call, with the calculated values
+being from within an hour.  
+**Response (JSON)**  
+---  
+Returns a JSON dictionary with "bids" and "asks". Each is a list of open
+orders and each order is represented as a list holding the price and the
+amount.  
+  
+#### Transactions
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/transactions/  
+  | Returns data for the BTC/USD currency pair.  
+GET |  https://www.bitstamp.net/api/v2/transactions/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**time** (Optional) |  The time interval from which we want the transactions
+to be returned. Possible values are **minute** , **hour** (default) or
+**day**.  
+**Response (JSON)** \- descending list of transactions. Every transaction
+dictionary contains:  
+---  
+**date** |  Unix timestamp date and time.  
+**tid** |  Transaction ID.  
+**price** |  BTC price.  
+**amount** |  BTC amount.  
+**type** |  0 (buy) or 1 (sell).  
+  
+#### Trading pairs info
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/v2/trading-pairs-info/API v2  
+**Response (JSON)** \- list of trading pairs. Every trading pair dictionary
+contains:  
+---  
+**name** |  Trading pair.  
+**url_symbol** |  URL symbol of trading pair.  
+**base_decimals** |  Decimal precision for base currency (BTC/USD - base:
+BTC).  
+**counter_decimals** |  Decimal precision for counter currency (BTC/USD -
+counter: USD).  
+**minimum_order** |  Minimum order size.  
+**trading** |  Trading engine status (Enabled/Disabled).  
+**description** |  Trading pair description.  
+  
+#### EUR/USD conversion rate
+
+**Request**  
+---  
+GET |  https://www.bitstamp.net/api/eur_usd/  
+**Response (JSON)**  
+---  
+**buy** |  Buy conversion rate.  
+**sell** |  Sell conversion rate.  
+  
+# API authentication
+
+All private API calls require authentication. For a successful authentication
+you need to provide **your API key** , a **signature** and a **nonce**
+parameter.
+
+#### API key
+
+To get an API key, go to "Account", "Security" and then "API Access". Set
+permissions and click "Generate key".
+
+#### Nonce
+
+Nonce is a regular integer number. It must be increased with every request you
+make. Read more about it
+[here](http://en.wikipedia.org/wiki/Cryptographic_nonce). Example: if you set
+nonce to 1 in your first request, you must set it to at least 2 in your second
+request. You are not required to start with 1. A common practice is to use
+[unix time](http://en.wikipedia.org/wiki/Unix_time) for that parameter.
+
+#### Signature
+
+Signature is a HMAC-SHA256 encoded message containing nonce, customer ID (can
+be found [here](/account/balance/)) and API key. The HMAC-SHA256 code must be
+generated using a secret key that was generated with your API key. This code
+must be converted to it's hexadecimal representation (64 uppercase
+characters).
+
+A short code example on how to generate a signature can be seen here:
+
+Python  | import hmac  
+import hashlib  
+  
+message = nonce + customer_id + api_key  
+signature = hmac.new(  
+    API_SECRET,  
+    msg=message,  
+    digestmod=hashlib.sha256  
+).hexdigest().upper()  
+---  
+  
+Authentication errors
+
+**API key not found** |  Check your API key value  
+---|---  
+**IP address not allowed** |  This IP address has no permission to use this
+API key  
+**No permission found** |  API key hasn't got permission for calling this
+function  
+**Invalid nonce** |  Check your nonce value. It must be greater than last
+nonce used  
+**Invalid signature** |  Posted signature doesn't match with ours  
+**Authentication failed** |  Can't find customer with selected API key  
+**Missing key, signature and nonce parameters** |  Parameters were not posted
+in API request  
+**Your account is frozen** |  Contact support to unfreeze your account  
+  
+# Private Functions
+
+#### Account balance
+
+This API call is cached for 10 seconds. This call will be executed on the
+account (Sub or Main), to which the used API key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/balance/  
+POST |  https://www.bitstamp.net/api/v2/balance/API v2  
+  | Returns all the balances.  
+POST |  https://www.bitstamp.net/api/v2/balance/{currency_pair}/API v2  
+  | Returns the values relevant to the specified **currency_pair** parameter.
+Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+**usd_balance** |  USD balance.  
+**btc_balance** |  BTC balance.  
+**eur_balance** |  EUR balance.  
+**xrp_balance** |  XRP balance.  
+**usd_reserved** |  USD reserved.  
+**btc_reserved** |  BTC reserved.  
+**eur_reserved** |  EUR reserved.  
+**xrp_reserved** |  XRP reserved.  
+**usd_available** |  USD available for trading.  
+**btc_available** |  BTC available for trading.  
+**eur_available** |  EUR available for trading.  
+**xrp_available** |  XRP available for trading.  
+If https://www.bitstamp.net/api/v2/balance/  
+**btcusd_fee** |  Customer BTC/USD trading fee.  
+**btceur_fee** |  Customer BTC/EUR trading fee.  
+**eurusd_fee** |  Customer EUR/USD trading fee.  
+**xrpusd_fee** |  Customer XRP/USD trading fee.  
+**xrpeur_fee** |  Customer XRP/EUR trading fee.  
+**xrpbtc_fee** |  Customer XRP/BTC trading fee.  
+Other  
+**fee** |  Customer trading fee.  
+  
+Balance errors
+
+**Authentication errors**  
+---  
+  
+#### User transactions
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/user_transactions/  
+  | Returns transactions for all currency pairs.  
+POST |  https://www.bitstamp.net/api/v2/user_transactions/API v2  
+  | Returns transactions for all currency pairs.  
+POST |  https://www.bitstamp.net/api/v2/user_transactions/{currency_pair}/API
+v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**offset** |  Skip that many transactions before returning results (default:
+0).  
+**limit** |  Limit result to that many transactions (default: 100; maximum:
+1000).  
+**sort** |  Sorting by date and time: asc - ascending; desc - descending
+(default: desc).  
+**Response (JSON)** : success - Returns a descending list of transactions,
+represented as dictionaries.  
+---  
+**datetime** |  Date and time.  
+**id** |  Transaction ID.  
+**type** |  Transaction type: 0 - deposit; 1 - withdrawal; 2 - market trade;
+14 - sub account transfer.  
+**usd** |  USD amount.  
+**eur** (v2 calls only) |  EUR amount.  
+**btc** |  BTC amount.  
+**xrp** (v2 calls only) |  XRP amount.  
+**btc_usd** (or **btc_eur** if available) |  Exchange rate.  
+**fee** |  Transaction fee.  
+**order_id** |  Executed order ID.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+User_transactions errors
+
+**Authentication errors**  
+---  
+**Invalid offset** |  Offset should be positive number  
+**Limit too large** |  Max value of limit parameter is 1000  
+**Invalid limit** |  Limit parameter should be number from 1 to 1000  
+**Invalid sort parameter** |  Sort parameter can only be 'asc' or 'desc'  
+  
+#### Open orders
+
+This API call is cached for 10 seconds. This call will be executed on the
+account (Sub or Main), to which the used API key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/open_orders/  
+  | Returns data for the BTC/USD currency pair.  
+POST |  https://www.bitstamp.net/api/v2/open_orders/all/API v2  
+  | Returns data for all currency pairs.  
+POST |  https://www.bitstamp.net/api/v2/open_orders/{currency_pair}API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)** : success - Returns a list of open orders, where each
+order is represented as a dictionary.  
+---  
+**id** |  Transaction ID.  
+**datetime** |  Date and time.  
+**type** |  Type: 0 - buy; 1 - sell.  
+**price** |  Price.  
+**amount** |  Amount.  
+**currency_pair** (if **all** currency pairs) |  Currency Pair.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+Open_orders errors
+
+**Authentication errors**  
+---  
+  
+#### Order status
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/order_status/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**id** |  Order ID.  
+**Response (JSON)**  
+---  
+**status** |  In Queue, Open or Finished.  
+**transactions** |  Each transaction in dictionary is represented as a list of
+tid, usd, price, fee, btc, datetime and type (0 - deposit; 1 - withdrawal; 2 -
+market trade).  
+  
+Order_status errors
+
+**Authentication errors**  
+---  
+**Missing id POST param** |  Id parameter missing  
+**Invalid order id** |  Order id parameter can only be number  
+**Order not found** |  Order with that id was not found in our system  
+  
+#### Cancel order
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/cancel_order/  
+POST |  https://www.bitstamp.net/api/v2/cancel_order/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**id** |  Order ID.  
+**Response (JSON)** : success  
+---  
+If https://www.bitstamp.net/api/v2/cancel_order/  
+**id** |  Order id.  
+**amount** |  Order amount.  
+**price** |  Order price.  
+**type** |  Order type.  
+If https://www.bitstamp.net/api/cancel_order/  
+**"True"** |  Order has been found and canceled.  
+**Response (JSON)** : failure  
+**error** |  The reason for the error.  
+  
+Cancel_order errors
+
+**Authentication errors**  
+---  
+**Missing id POST param** |  Id parameter missing  
+**Invalid order id** |  Order id parameter can only be number  
+**Order not found** |  Order with that id was not found in our system  
+**Order in queue. Please try again later.** |  You can only cancel your order
+when order is in status Open.  
+  
+#### Cancel all orders
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/cancel_all_orders/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+This call will cancel all open orders.Returns "true" if all orders have been
+canceled, "false" if it failed.  
+  
+Cancel_all_orders errors
+
+**Authentication errors**  
+---  
+  
+#### Buy limit order
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/buy/  
+  | Opens an order in the BTC/USD orderbook.  
+POST |  https://www.bitstamp.net/api/v2/buy/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**price** |  Price.  
+**limit_price** |  If the order gets executed, a new sell order will be
+placed, with "limit_price" as its price.  
+**daily_order** (Optional) |  Opens buy limit order which will be canceled at
+0:00 UTC unless it already has been executed. Possible value: **True** API v2  
+**Response (JSON)** : success  
+---  
+**id** |  Order ID.  
+**datetime** |  Date and time.  
+**type** |  0 (buy) or 1 (sell).  
+**price** |  Price.  
+**amount** |  Amount.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+Buy errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or price POST parameters** |  Missing one or both
+parameters  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**Minimum order size is 5 USD** |  Order value must be at least $5  
+**Price is more than 20% above market price.** |  Order price must not exceed
+20% of current price  
+**You need 'order_value' USD to open that order. You have only
+'available_fiat' USD available. Check your account balance for details.** |
+Account has less 'available_fiat' that are required to make this order  
+**Sell if executed price must be higher than buy price.** |  'limit_price'
+must be larger than 'price' parameter  
+**Both limit_price and daily_order cannot be set.** |  Only one of those
+parameters can be setAPI v2  
+  
+#### Buy market order
+
+By placing a market order you acknowledge that the execution of your order
+depends on the market conditions and that these conditions may be subject to
+sudden changes that cannot be foreseen.
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/buy/market/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**Response (JSON)** : success  
+---  
+**id** |  Order ID.  
+**datetime** |  Date and time.  
+**type** |  0 (buy) or 1 (sell).  
+**price** |  Price.  
+**amount** |  Amount.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+Market buy errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or price POST parameters** |  Missing one or both
+parameters  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**Minimum order size is 5 USD** |  Order value must be at least $5  
+**You can only buy 'amount' 'currency'. Check your account balance for
+details.** |  Account has less 'available_currency' that are required to make
+this order  
+  
+#### Sell limit order
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/sell/  
+  | Opens an order in the BTC/USD orderbook.  
+POST |  https://www.bitstamp.net/api/v2/sell/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**price** |  Price.  
+**limit_price** |  If the order gets executed, a new buy order will be placed,
+with "limit_price" as its price.  
+**daily_order** (Optional) |  Opens sell limit order which will be canceled at
+0:00 UTC unless it already has been executed. Possible value: **True** API v2  
+**Response (JSON)** : success  
+---  
+**id** |  Order ID.  
+**datetime** |  Date and time.  
+**type** |  0 (buy) or 1 (sell).  
+**price** |  Price.  
+**amount** |  Amount.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+Sell errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or price POST parameters** |  Missing one or both
+parameters  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**Minimum order size is $5** |  Order value must be at least $5  
+**Price is more than 20% below market price.** |  Order price must not exceed
+20% of current price  
+**You have only 'available_btc' BTC available. Check your account balance for
+details.** |  Account has less 'available_btc' that are required to make this
+order  
+**Buy if executed price must be lower than sell price.** |  'limit_price' must
+be lower than 'price' parameter  
+**Both limit_price and daily_order cannot be set.** |  Only one of those
+parameters can be setAPI v2  
+  
+#### Sell market order
+
+By placing a market order you acknowledge that the execution of your order
+depends on the market conditions and that these conditions may be subject to
+sudden changes that cannot be foreseen.
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/sell/market/{currency_pair}/API v2  
+  | Supported values for **currency_pair** : btcusd, btceur, eurusd, xrpusd,
+xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd,
+bcheur, bchbtc  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**Response (JSON)** : success  
+---  
+**id** |  Order ID.  
+**datetime** |  Date and time.  
+**type** |  0 (buy) or 1 (sell).  
+**price** |  Price.  
+**amount** |  Amount.  
+**Response (JSON)** : failure  
+**status** (v2 calls only) |  "error"  
+**reason** (v2 calls only) |  The reason for the error.  
+  
+Market sell errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or price POST parameters** |  Missing one or both
+parameters  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**Minimum order size is $5** |  Order value must be at least $5  
+**You can only sell 'amount' 'currency'. Check your account balance for
+details.** |  Account has less 'available_currency' that are required to make
+this order  
+  
+#### Withdrawal requests
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/withdrawal_requests/  
+POST |  https://www.bitstamp.net/api/v2/withdrawal-requests/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**timedelta** (Optional, default 86400) |  Withdrawal requests from number of
+seconds ago to now (max. 50000000).  
+**Response (JSON)**  
+---  
+**id** |  Order ID.  
+**datetime** |  Date and time.  
+**type** |  0 (SEPA), 1 (bitcoin), 2(WIRE transfer), 14 (XRP), 15 (litecoin),
+16 (ethereum).  
+**currency** (v2 calls only) |  Currency.  
+**amount** |  Amount.  
+**status** |  0 (open), 1 (in process), 2 (finished), 3 (canceled) or 4
+(failed).  
+**data** (v1 calls only) |  Additional withdrawal request data.  
+**address** (crypto withdrawals only) |  Withdrawal address.  
+**transaction_id** (crypto withdrawals only) |  Transaction id.  
+  
+Withdrawal_requests errors
+
+**Authentication errors**  
+---  
+  
+#### Bitcoin withdrawal
+
+This call will be executed on the account, to which the used API key is bound
+to. This call is for your main account only.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/bitcoin_withdrawal/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Bitcoin amount.  
+**address** |  Bitcoin address.  
+**instant** |  0 (false) or 1 (true). If the destination address supports
+BitGo Instant deposits and you need instant delivery of Bitcoins with zero
+confirmations. Additional fees apply.  
+**Response (JSON)**  
+---  
+**id** |  Withdrawal ID.  
+  
+Bitcoin_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address POST parameters** |  One or both parameters
+missing  
+**Instant parameter needs to be an integer (0 - false or 1 - true)** |
+Instant parameter can only be 0 or 1  
+**User not verified** |  You need to verify account before withdrawal  
+**Bitcoin withdrawals are currently unavailable for your account.** |  Contact
+support for additional information.  
+**Not allowed to withdraw to specified bitcoin address** |  API key is set for
+withdrawing to another bitcoin address  
+**Ensure this value is greater than or equal to 0.00006000** |  Minimum
+withdrawal amount is 0.00006  
+**Ensure this value has at least 25 characters (it has x)**  
+**Ensure this value has at most 34 characters (it has x)** |  Address
+parameter must be between 25 and 34 characters long  
+**Enter a number. Use "." as a decimal point.** |  Amount parameter can only
+be number  
+**You have only 'available' BTC available. Check your account balance for
+details.** |  Account has less 'available' BTC that are required to make this
+withdrawal  
+  
+#### Litecoin withdrawal
+
+This call will be executed on the account, to which the used API key is bound
+to. This call is for your main account only.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/ltc_withdrawal/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Litecoin amount.  
+**address** |  Litecoin address.  
+**Response (JSON)**  
+---  
+**id** |  Withdrawal ID.  
+  
+Litecoin_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address POST parameters** |  One or both parameters
+missing  
+**User not verified** |  You need to verify account before withdrawal  
+**Litecoin withdrawals are currently unavailable for your account.** |
+Contact support for additional information.  
+**Not allowed to withdraw to specified litecoin address** |  API key is set
+for withdrawing to another litecoin address  
+**Ensure this value is greater than or equal to 0.00006000** |  Minimum
+withdrawal amount is 0.00006  
+**Ensure this value has at least 25 characters (it has x)**  
+**Ensure this value has at most 34 characters (it has x)** |  Address
+parameter must be between 25 and 34 characters long  
+**Enter a number. Use "." as a decimal point.** |  Amount parameter can only
+be number  
+**You have only 'available' LTC available. Check your account balance for
+details.** |  Account has less 'available' LTC that are required to make this
+withdrawal  
+  
+#### Litecoin deposit address
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/ltc_address/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your litecoin deposit address.  
+  
+Litecoin_deposit_address errors
+
+**Authentication errors**  
+---  
+  
+#### ETH withdrawal
+
+This call will be executed on the account, to which the used API key is bound
+to. This call is for your main account only.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/eth_withdrawal/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  ETH amount.  
+**address** |  ETH address.  
+**Response (JSON)**  
+---  
+**id** |  Withdrawal ID.  
+  
+ETH_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address POST parameters** |  One or both parameters
+missing  
+**User not verified** |  You need to verify account before withdrawal  
+**ETH withdrawals are currently unavailable for your account.** |  Contact
+support for additional information.  
+**Not allowed to withdraw to specified ETH address** |  API key is set for
+withdrawing to another ETH address  
+**Ensure this value is greater than or equal to 0.00006000** |  Minimum
+withdrawal amount is 0.00006  
+**Ensure this value has at least 40 characters (it has x)**  
+**Ensure this value has at most 42 characters (it has x)** |  Address
+parameter must be between 40 and 42 characters long  
+**Enter a number. Use "." as a decimal point.** |  Amount parameter can only
+be number  
+**You have only 'available' ETH available. Check your account balance for
+details.** |  Account has less 'available' ETH that are required to make this
+withdrawal  
+  
+#### ETH deposit address
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/eth_address/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your ETH deposit address.  
+  
+ETH_deposit_address errors
+
+**Authentication errors**  
+---  
+**Address not ready due to network congestion. Please try again in few
+minutes.** |  We couldn't provide you with an address due to network
+congestion.  
+  
+#### Bitcoin deposit address
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/bitcoin_deposit_address/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your bitcoin deposit address.  
+  
+Bitcoin_deposit_address errors
+
+**Authentication errors**  
+---  
+  
+#### Unconfirmed bitcoin deposits
+
+This API call is cached for 60 seconds. This call will be executed on the
+account (Sub or Main), to which the used API key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/unconfirmed_btc/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)** \- list of unconfirmed bitcoin transactions. Each
+transaction is represented as dictionary  
+---  
+**amount** |  Bitcoin amount.  
+**address** |  Deposit address used.  
+**confirmations** |  Number of confirmations.  
+  
+Unconfirmed_btc errors
+
+**Authentication errors**  
+---  
+  
+#### Ripple withdrawal
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/ripple_withdrawal/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Currency amount.  
+**address** |  Bitcoin address.  
+**currency** |  Currency.  
+**Response (JSON)**  
+---  
+Returns "true" if successful.  
+  
+Ripple_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address and/or currency POST parameters** |  One or
+all parameters are missing  
+**User not verified** |  You need to verify account before withdrawal  
+**Ripple withdrawals are currently unavailable for your account.** |  Contact
+support for additional information.  
+**Ensure this value has at least 25 characters (it has x)**  
+**Ensure this value has at most 50 characters (it has x)** |  Address
+parameter must be between 25 and 50 characters long  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**You have only 'available' 'currency' available. Check your account balance
+for details.** |  Account has less 'available' 'currency' that are required to
+make this withdrawal  
+  
+#### Ripple deposit address
+
+This API call is cached for 60 seconds. This call will be executed on the
+account (Sub or Main), to which the used API key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/ripple_address/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your ripple deposit address.  
+  
+Ripple_address errors
+
+**Authentication errors**  
+---  
+  
+#### BCH withdrawal
+
+This call will be executed on the account, to which the used API key is bound
+to. This call is for your main account only.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/bch_withdrawal/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  BCH amount.  
+**address** |  BCH address.  
+**Response (JSON)**  
+---  
+**id** |  Withdrawal ID.  
+  
+BCH_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address POST parameters** |  One or both parameters
+missing  
+**User not verified** |  You need to verify account before withdrawal  
+**BCH withdrawals are currently unavailable for your account.** |  Contact
+support for additional information.  
+**Not allowed to withdraw to specified BCH address** |  API key is set for
+withdrawing to another BCH address  
+**Ensure this value is greater than or equal to 0.00006000** |  Minimum
+withdrawal amount is 0.00006  
+**Ensure this value has at least 25 characters (it has x)**  
+**Ensure this value has at most 34 characters (it has x)** |  Address
+parameter must be between 25 and 34 characters long  
+**Enter a number. Use "." as a decimal point.** |  Amount parameter can only
+be number  
+**You have only 'available' BCH available. Check your account balance for
+details.** |  Account has less 'available' BCH that are required to make this
+withdrawal  
+  
+#### BCH deposit address
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/bch_address/  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your BCH deposit address.  
+  
+BCH_deposit_address errors
+
+**Authentication errors**  
+---  
+  
+#### Transfer balance from Sub to Main account
+
+Transfers the desired balance from a Sub Account to your Main Account. Can be
+called by either the Main Account or a Sub Account, but requires a permission
+in both cases. The subAccount parameter must be provided if the Main Account
+is initiating the call. If a Sub Account is making the call, then it is the
+target Sub Account for the transfer and no further clarification is required.
+In that case, passing this parameter will have no additional effect.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/transfer-to-main/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**currency** |  Currency.  
+**subAccount** (Optional) |  The Sub Account unique identifier.  
+**Response (JSON)**  
+---  
+**status** |  "ok" or "error"  
+**reason** (available only if status is "error") |  Additional error info.  
+  
+Transfer-to-main errors
+
+**Authentication errors**  
+---  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**You have only 'available' 'currency' available. Check your account balance
+for details.** |  Account has less 'available' 'currency' that are required to
+make this transfer  
+**Select a valid choice. X is not one of the available choices.** |  X is not
+valid currency. Possible choices BTC, USD, EUR, XRP, LTC, ETH, BCH.  
+**Sub account with identifier "X" does not exist.** |  Can't find sub account
+with id X.  
+  
+#### Transfer balance from Main to Sub Account
+
+Transfers the desired balance from your Main Account to a Sub Account,
+specified by the subAccount parameter. This call can only be performed by your
+Main Account.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/transfer-from-main/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  Amount.  
+**currency** |  Currency.  
+**subAccount** |  The Sub Account unique identifier.  
+**Response (JSON)**  
+---  
+**status** |  "ok" or "error"  
+**reason** (available only if status is "error") |  Additional error info.  
+  
+Transfer-from-main errors
+
+**Authentication errors**  
+---  
+**'parameter': Enter a number. Use "." as a decimal point.** |  'parameter'
+can only be number  
+**You have only 'available' 'currency' available. Check your account balance
+for details.** |  Account has less 'available' 'currency' that are required to
+make this transfer  
+**Select a valid choice. X is not one of the available choices.** |  X is not
+valid currency. Possible choices BTC, USD, EUR, XRP, LTC, ETH, BCH.  
+**Sub account with identifier "X" does not exist.** |  Can't find sub account
+with id X.  
+  
+#### XRP withdrawal
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/xrp_withdrawal/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  XRP amount.  
+**address** |  XRP address.  
+**destination_tag** (Optional) |  Address destination tag.  
+**Response (JSON)**  
+---  
+**id** |  Withdrawal ID.  
+  
+XRP_withdrawal errors
+
+**Authentication errors**  
+---  
+**Missing amount and/or address POST parameters** |  One or both parameters
+missing  
+**XRP withdrawals are currently unavailable for your account.** |  Contact
+support for additional information.  
+**Not allowed to withdraw to specified XRP address** |  API key is set for
+withdrawing to another XRP address  
+**Ensure this value is greater than or equal to 20** |  Minimum withdrawal
+amount is 20  
+**Ensure this value has at least 25 characters (it has x)**  
+**Ensure this value has at most 34 characters (it has x)** |  Address
+parameter must be between 25 and 34 characters long  
+**Enter a number. Use "." as a decimal point.** |  Amount parameter can only
+be number  
+**You have only 'available' XRP available. Check your account balance for
+details.** |  Account has less 'available' XRP that are required to make this
+withdrawal  
+  
+#### XRP deposit address
+
+This call will be executed on the account (Sub or Main), to which the used API
+key is bound to.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/xrp_address/ API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**Response (JSON)**  
+---  
+Returns your XRP deposit address and destination tag.  
+  
+XRP_address errors
+
+**Authentication errors**  
+---  
+  
+#### Open bank withdrawal
+
+Opens a bank withdrawal request ( **SEPA** or **international** ). Withdrawal
+requests opened via API are automatically confirmed (no confirmation e-mail
+will be sent), but are processed just like withdrawals opened through the
+platform's interface. This call can only be performed by your Main Account.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/withdrawal/open/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**amount** |  The amount to withdraw.  
+**account_currency** |  The balance from which you wish to withdraw. Can be
+either "USD" or "EUR".  
+**name** |  Full user or company name.  
+**IBAN** |  User or company IBAN.  
+**BIC** |  The target bank BIC.  
+**address** |  User or company address.  
+**postal_code** |  User or company postal code.  
+**city** |  User or company city.  
+**country** |  User or company country. Country codes must be in accordance
+with the [ISO
+3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Officially_assigned_code_elements)
+standard (use two character Alpha-2 codes). **Disclaimer:** Not all country
+choices listed at this reference URL are supported. For a detailed list please
+refer to our platform's withdrawal interfaces.  
+**type** |  Type of the withdrawal request ("sepa" or "international").  
+**bank_name** (international withdrawals only) |  Target bank name.  
+**bank_address** (international withdrawals only) |  Target bank address.  
+**bank_postal_code** (international withdrawals only) |  Target bank postal
+code.  
+**bank_city** (international withdrawals only) |  Target bank city.  
+**bank_country** (international withdrawals only) |  Target bank country.
+Country codes must be in accordance with the [ISO
+3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Officially_assigned_code_elements)
+standard (use two character Alpha-2 codes). **Disclaimer:** Not all country
+choices listed at this reference URL are supported. For a detailed list please
+refer to our platform's withdrawal interfaces.  
+**currency** (international withdrawals only) |  The currency in which the
+funds should be withdrawn (may involve conversion fees). Currency codes must
+be in accordance with the [ISO
+4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) standard.
+**Disclaimer:** Not all currency choices listed at this reference URL are
+supported. For a detailed list please refer to our platform's withdrawal
+interfaces.  
+**comment** (Optional) |  Withdrawal comment.  
+**Response (JSON)** : success  
+---  
+**id** |  Id of the opened withdrawal request.  
+**Response (JSON)** : failure  
+**status** |  "error"  
+**reason** (available only if status is "error") |  Additional error info.  
+  
+Open bank withdrawal errors
+
+**Authentication errors**  
+---  
+**Please update your profile with your FATCA information, before
+withdrawing.** |  You must have the FATCA information updated on your profile,
+before using this service.  
+**Opening bank withdrawals with sub account API keys is not supported.** |
+This API endpoint can only be utilized by your main account.  
+**'X': ['This field is required.']** |  Parameter X is required for this call.  
+**'X': ['Select a valid choice. Y is not one of the available choices.']** |
+Y is not a valid value for parameter X.  
+**Bank withdrawals temporarily disabled.** |  No new bank withdrawals can be
+opened at this time.  
+**Unsupported withdrawal type (must be either SEPA or international).** |
+When opening bank withdrawals, you must specify one of the two supported
+types: SEPA or international.  
+**You have only 'amount' currency available. Check your account balance for
+details.** | To open this withdrawal, your balance must have at least 'amount'
+of target currency available.  
+**'X': ['Enter a number. Use "." as a decimal point.']** |  Parameter X can
+only be a decimal number.  
+  
+#### Bank withdrawal status
+
+Checks the status of a bank withdrawal request. This call can only be
+performed by your Main Account.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/withdrawal/status/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**id** |  ID of the withdrawal request.  
+**Response (JSON)** : success  
+---  
+**status** |  Status of the withdrawal request.  
+**Response (JSON)** : failure  
+**status** |  "error"  
+**reason** |  The reason for the error.  
+  
+Bank withdrawal status errors
+
+**Authentication errors**  
+---  
+**Please update your profile with your FATCA information, before performing
+withdrawal status checks.** |  You must have the FATCA information updated on
+your profile, before using this service.  
+**Performing bank withdrawal status checks with sub account API keys is not
+supported.** |  This API endpoint can only be utilized by your main account.  
+**Missing parameters: [...].** |  Parameters stated in the list ([...]) are
+required for this call.  
+**No bank withdrawal with id=X found.** |  Could not find any bank withdrawal
+with the id X.  
+  
+#### Cancel bank withdrawal
+
+Cancels a bank withdrawal request. This call can only be performed by your
+Main Account.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/withdrawal/cancel/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**id** |  ID of the withdrawal request.  
+**Response (JSON)** : success  
+---  
+**id** |  ID of the cancelled withdrawal request.  
+**amount** |  Amount of the cancelled withdrawal request.  
+**currency** |  Currency of the cancelled withdrawal request.  
+**account_currency** |  Account currency (balance currency from which the
+withdrawal was requested) of the cancelled withdrawal request.  
+**type** |  The type of the cancelled withdrawal request.  
+**Response (JSON)** : failure  
+**status** |  "error"  
+**reason** |  The reason for the error.  
+  
+Cancel bank withdrawal errors
+
+**Authentication errors**  
+---  
+**Please update your profile with your FATCA information, before cancelling
+withdrawals.** |  You must have the FATCA information updated on your profile,
+before using this service.  
+**Cancelling bank withdrawals with sub account API keys is not supported.** |
+This API endpoint can only be utilized by your main account.  
+**Missing parameters: [...].** |  Parameters stated in the list ([...]) are
+required for this call.  
+**No active bank withdrawal with id=X found.** |  Could not find any active
+bank withdrawal with the id X. Will return the same response for already
+cancelled withdrawal requests.  
+**Cannot cancel a withdrawal in process (id=X).** |  The bank withdrawal
+request with id=X is currently being processed and cannot be cancelled.  
+  
+#### New liquidation address
+
+Creates new liquidation address which will automatically sell your BTC for
+specified liquidation_currency.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/liquidation_address/new/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**liquidation_currency** |  Deposited BTCs will be automatically converted to
+liquidation_currency.  
+**Response (JSON)** : success  
+---  
+**address** |  Address set for automatic conversion.  
+**Response (JSON)** : failure  
+**status** |  "error"  
+**reason** |  The reason for the error.  
+  
+New liquidation address errors
+
+**Authentication errors**  
+---  
+**Please update your profile with your FATCA information, before cancelling
+withdrawals.** |  You must have the FATCA information updated on your profile,
+before using this service.  
+**Missing liquidation_currency parameter.** |  Parameter liquidation_currency
+is required for this call.  
+**Invalid currency.** or **Currency [...] not supported.** |  Invalid
+liquidation_currency.  
+**Cannot create new address, please try later.** |  At the moment we can't
+create new deposit address. Try again later.  
+  
+#### Liquidation address info
+
+Shows transactions (BTC to liquidation_currency) for liquidation address.
+
+**Request**  
+---  
+POST |  https://www.bitstamp.net/api/v2/liquidation_address/info/API v2  
+**Request parameters**  
+**key** |  API key.  
+**signature** |  Signature.  
+**nonce** |  Nonce.  
+**address** (Optional) |  Shows transactions for specific liquidation address
+or for all users liquidation addresses.  
+**Response (JSON)** : success  
+---  
+**address** |  Address for automatic conversion.  
+**currency_pair** |  Currency pair used for automatic conversion.  
+**transactions** |  List of JSON objects which include order_id(conversion
+order id), count(number of transactions) and trades (JSON with exchange_rate,
+btc_amount and fees).  
+**Response (JSON)** : failure  
+**status** |  "error"  
+**reason** |  The reason for the error.  
+  
+Liquidation address info errors
+
+**Authentication errors**  
+---  
+**Please update your profile with your FATCA information, before cancelling
+withdrawals.** |  You must have the FATCA information updated on your profile,
+before using this service.
+
