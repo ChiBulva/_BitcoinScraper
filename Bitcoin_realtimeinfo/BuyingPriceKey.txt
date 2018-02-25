@@ -5,3 +5,16 @@ Total Investment: $197
 0.01757012
 11212.79
 197
+
+"""
+replace with your initial buy values 
+
++x.xxxxxxxx BTC         <-- Price of BitCoin
+@ $XX,XXX.XX per BTC    <-- Price of BitCoin in USD
+Total Investment: $ppp  <-- Total investment in USD
+
+x.xxxxxxxx              <-- from 4 lines up
+XXXXX.XX                <-- from 4 lines up
+ppp                     <-- from 4 lines up
+
+"""
